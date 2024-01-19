@@ -8,7 +8,7 @@
         <title>Rest API Authentication Example</title>
  
         <!-- Bootstrap 4 CSS and custom CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" crossorigin="anonymous" />
 <link rel="stylesheet" type="text/css" href="custom.css" />
  
     </head>
@@ -43,6 +43,7 @@
  
             <!-- where main content will appear -->
             <div id="content"></div>
+            <div id= "key"></div>
         </div>
     </div>
  
@@ -51,8 +52,8 @@
  
 <!-- jQuery & Bootstrap 4 JavaScript libraries -->
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
  
 <script>
 // jQuery codes
@@ -143,7 +144,7 @@ $.ajax({
  
         // show home page & tell the user it was a successful login
         showHomePage();
-        $('#response').html("<div class='alert alert-success'>Successful login.</div>");
+        $('#response').html("<div class='alert alert-success' >Successful login.Your JWT is "+result.jwt+"</div>");
  
     },
     error: function(xhr, resp, text){
@@ -277,19 +278,22 @@ function showHomePage(){
     // validate jwt to verify access
     var jwt = getCookie('jwt');
     $.post("validate_token.php", JSON.stringify({ jwt:jwt })).done(function(result) {
- 
+    
         // if valid, show homepage
 var html = `
     <div class="card">
         <div class="card-header">Welcome to Home!</div>
         <div class="card-body">
             <h5 class="card-title">You are logged in.</h5>
+            <h1 id="jwt"><h1>
             <p class="card-text">You won't be able to access the home and account pages if you are not logged in.</p>
         </div>
+
     </div>
     `;
  
 $('#content').html(html);
+$('#key').html("<h1>"+document.cookie+"</h1>");
 showLoggedInMenu();
     })
  

