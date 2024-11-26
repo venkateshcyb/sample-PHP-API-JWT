@@ -22,8 +22,13 @@ $uservalue = $data->testkey;
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $stmt = $conn->prepare('SELECT firstname, lastname FROM Users Where id="'.$uservalue.'"');
-    $stmt->execute();
+    //$stmt = $conn->prepare('SELECT firstname, lastname FROM users Where id="'.$uservalue.'"');
+   // $stmt = $conn->prepare('SELECT firstname, lastname FROM users Where id="'.$data->testkey.'"');
+     $sql = 'SELECT firstname, lastname FROM users Where id='.$uservalue;
+ 
+    $stmt = $conn->prepare($sql);    
+
+     $stmt->execute();
   
     // set the resulting array to associative
     
@@ -66,6 +71,16 @@ else{
        echo json_encode(array("message" => $e->getMessage()));
        //echo json_encode(array("message" => "Failure"));
   }
+   catch(Exception $e) {
+    //echo "Error: " . $e->getMessage();
+       // set response code
+       http_response_code(200);
+ 
+       // tell the user failed
+       echo json_encode(array("message" => $e->getMessage()));
+       //echo json_encode(array("message" => "Failure"));
+  }
+
   $conn = null;
 
 
